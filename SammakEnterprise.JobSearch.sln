@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.Core.Common", "..\SammakEnterprise.Core.Common\SammakEnterprise.Core.Common.csproj", "{5C899CF5-C1C5-4FC3-BB31-134F558C51C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.Core.Persistence", "..\SammakEnterprise.Core.Persistence\SammakEnterprise.Core.Persistence.csproj", "{3C26982B-34BE-413D-885A-DEDA17FD89D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.JobSearch.Middle", "SammakEnterprise.JobSearch.Middle\SammakEnterprise.JobSearch.Middle.csproj", "{D27CA210-7EEE-473F-8E07-824639B96417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.JobSearch.Api", "Sammak.Enterprise.JobSearch.Api\SammakEnterprise.JobSearch.Api.csproj", "{62D43331-B592-496A-ADAD-903E45A29CCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C899CF5-C1C5-4FC3-BB31-134F558C51C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C899CF5-C1C5-4FC3-BB31-134F558C51C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C899CF5-C1C5-4FC3-BB31-134F558C51C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C899CF5-C1C5-4FC3-BB31-134F558C51C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C26982B-34BE-413D-885A-DEDA17FD89D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C26982B-34BE-413D-885A-DEDA17FD89D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C26982B-34BE-413D-885A-DEDA17FD89D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C26982B-34BE-413D-885A-DEDA17FD89D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D27CA210-7EEE-473F-8E07-824639B96417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D27CA210-7EEE-473F-8E07-824639B96417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D27CA210-7EEE-473F-8E07-824639B96417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D27CA210-7EEE-473F-8E07-824639B96417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62D43331-B592-496A-ADAD-903E45A29CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62D43331-B592-496A-ADAD-903E45A29CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62D43331-B592-496A-ADAD-903E45A29CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62D43331-B592-496A-ADAD-903E45A29CCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5EEC5AEB-9A96-4B76-B7BB-D5DBC1C1E185}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="SammakDb.Jobs" assembly="SammakEnterprise.JobSearch.Middle" namespace="SammakEnterprise.JobSearch.Middle.Entities" p1:name="Model" p1:Guid="a3647bd9-37ce-492f-a449-80e1eb8609c8" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="$EnumTypes">
+    <EnumType Name="EmployeeRole" UnderlyingType="Int16" class="EmployeeRole" p1:Guid="4b731189-d84e-4b6f-afbb-b42450b9e38b">
+      <Member Name="ItManager" p1:Guid="cc8dba62-5235-4797-9230-eef4f4b6f85b" />
+      <Member Name="HiringManager" p1:Guid="359e060a-49f6-40eb-bfe7-fe2944912783" />
+      <Member Name="PrincipalDeveloper" p1:Guid="0842926b-8357-440e-b92c-769ed0eccba9" />
+      <Member Name="SeniorDeveloper" p1:Guid="0e19e530-e9b5-4467-831b-3826e03ca6d6" />
+      <Member Name="Developer" p1:Guid="a3808c35-4f75-4ab5-86c1-b687257c0d02" />
+      <Member Name="ScrumMaster" p1:Guid="7cb1f26e-8b3e-4557-8b40-d6dd49044f71" />
+      <Member Name="Recruiter" p1:Guid="fb99fbb9-2b63-49f8-906e-f2067fb503f1" />
+      <Member Name="ProgramManager" p1:Guid="a8ce54c7-d671-4d41-90b7-9a7f1d350d9b" />
+    </EnumType>
+  </class>
+  <class name="Entity" table="" abstract="true" p1:Guid="5ec27833-d8e0-443a-9dba-e20a2e4e3380">
+    <id name="Id" type="Int64" p1:ValidateRequired="true" p1:Guid="9c383c57-af91-409c-bfa5-975f0df93ac0">
+      <column name="" />
+    </id>
+    <union-subclass name="DomainBase" abstract="true" p1:InheritanceGuid="f9aa4997-fb04-4fd9-9dee-d11bf450e84a" p1:Guid="89a5826c-8d7e-42ba-b975-171d84258ad0">
+      <property name="ExternalId" type="String" p1:nullable="true" p1:ValidateRequired="false" p1:Guid="9efd59ea-35b7-4160-ba95-44e9a6292605">
+        <column name="" />
+      </property>
+      <union-subclass name="Email" table="" p1:InheritanceGuid="6ca0ee06-cbe3-45e9-8e40-7a08dd1e0b38" p1:Guid="ce9d3871-0293-4864-8c1f-29938c191156">
+        <property name="EmailAddress" type="String" p1:nullable="true" p1:ValidateRequired="false" p1:Guid="ede4c3fa-8fdd-427b-abbc-64811a7b3356">
+          <column name="" />
+        </property>
+        <many-to-one name="Person" class="Person" p1:AssociationGuid="7311727a-6f36-4df4-ac0c-568478d97043" p1:Guid="a938d958-193c-4597-8cf6-c93d4600214f">
+          <column name="" />
+        </many-to-one>
+      </union-subclass>
+      <union-subclass name="Person" abstract="true" p1:InheritanceGuid="3b54542f-1c56-4557-a85c-f6b5922e23a8" p1:Guid="65813704-4891-4c1f-9d14-4b634db357a9">
+        <property name="FirstName" type="String" p1:nullable="true" p1:ValidateRequired="false" p1:Guid="34b976a7-e62f-4df0-8283-1c59f6d3fbef">
+          <column name="" />
+        </property>
+        <property name="LastName" type="String" p1:nullable="true" p1:ValidateRequired="false" p1:Guid="37691b6e-e6e6-46e2-964f-9f69f7843f1a">
+          <column name="" />
+        </property>
+        <bag name="Emails" inverse="true" generic="true" p1:AssociationGuid="7311727a-6f36-4df4-ac0c-568478d97043" p1:Guid="772ec08f-e819-48e0-9a6c-d08816d4630e">
+          <key>
+            <column name="" />
+          </key>
+          <one-to-many class="Email" />
+        </bag>
+        <union-subclass name="Employee" table="" p1:InheritanceGuid="fbb534f4-e26f-4b51-b95e-8c317393500c" p1:Guid="0f0c0ffe-4c52-49ad-ab1b-44212e11d27f">
+          <property name="Role" type="SammakEnterprise.JobSearch.Middle.Entities.EmployeeRole" p1:ValidateRequired="true" p1:Guid="0ebcee41-bb74-439c-839f-17fb3456e288">
+            <column name="" />
+          </property>
+        </union-subclass>
+      </union-subclass>
+    </union-subclass>
+  </class>
+</hibernate-mapping>
