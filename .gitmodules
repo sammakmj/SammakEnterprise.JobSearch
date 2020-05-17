@@ -1,0 +1,6 @@
+[submodule "SammakEnterprise.Core.Persistence"]
+	path = SammakEnterprise.Core.Persistence
+	url = https://github.com/sammakmj/SammakEnterprise.Core.Persistence
+[submodule "SammakEnterprise.Core.Common"]
+	path = SammakEnterprise.Core.Common
+	url = https://github.com/sammakmj/SammakEnterprise.Core.Common
