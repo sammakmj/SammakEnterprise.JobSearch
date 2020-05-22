@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.Core.Common", "..\SammakEnterprise.Core.Common\SammakEnterprise.Core.Common.csproj", "{5C899CF5-C1C5-4FC3-BB31-134F558C51C1}"
 EndProject
@@ -10,6 +10,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.JobSearch.Middle", "SammakEnterprise.JobSearch.Middle\SammakEnterprise.JobSearch.Middle.csproj", "{D27CA210-7EEE-473F-8E07-824639B96417}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SammakEnterprise.JobSearch.Api", "Sammak.Enterprise.JobSearch.Api\SammakEnterprise.JobSearch.Api.csproj", "{62D43331-B592-496A-ADAD-903E45A29CCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{1733B560-78CE-435D-BE0E-A803953F865F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

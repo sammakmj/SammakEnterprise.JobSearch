@@ -87,6 +87,7 @@ namespace SammakEnterprise.JobSearch.Api
             else
             {
                 Log.Error(e.Stringify());
+                ShowException(e, INDENT);
             }
         }
 

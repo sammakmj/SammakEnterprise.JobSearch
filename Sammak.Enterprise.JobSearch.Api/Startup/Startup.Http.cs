@@ -3,8 +3,9 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using SammakEnterprise.Core.Common.Api.Configuration.Activators;
-using SammakEnterprise.Core.Common.Infrastructure.Logging.NLog;
+using SammakEnterprise.Core.Common.Exceptions;
 using SammakEnterprise.Core.Common.Infrastructure.Ioc;
+using SammakEnterprise.Core.Common.Infrastructure.Logging.NLog;
 using SammakEnterprise.JobSearch.Api.Util;
 using System;
 using System.Net.Http.Formatting;
@@ -13,6 +14,7 @@ using System.Web.Http.Cors;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.ExceptionHandling;
 using WebApiThrottle;
+using ITraceWriter = System.Web.Http.Tracing.ITraceWriter;
 
 namespace SammakEnterprise.JobSearch.Api.Startup
 {
@@ -30,6 +32,8 @@ namespace SammakEnterprise.JobSearch.Api.Startup
                 Logger.Trace("UseWebApi Begin");
 
                 var config = CreateHttpConfiguration();
+
+                ConfigureSwagger(config);
 
                 app.UseStageMarker(PipelineStage.MapHandler);
                 app.UseWebApi(config);
@@ -55,15 +59,15 @@ namespace SammakEnterprise.JobSearch.Api.Startup
             config.Routes.MapHttpRoute(
                 name: "ResourceNotFound",
                 routeTemplate: Resources.Constants.AppInfo.RoutePrefix + "/{*uri}",
-                defaults: new { controller = "AppInfo", action = "ResourceNotFound" }
+                defaults: new { controller = "AppInfo", action = "ResourceNotFound", uri = RouteParameter.Optional }
             );
 
-            //config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
-            //GlobalExceptionHandler.AppName = Resources.Constants.AppInfo.DisplayName;
-            //GlobalExceptionHandler.AppVersion = Resources.Constants.AppInfo.Version;
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+            GlobalExceptionHandler.AppName = Resources.Constants.AppInfo.DisplayName;
+            GlobalExceptionHandler.AppVersion = Resources.Constants.AppInfo.Version;
 
             config.Services.Add(typeof(IExceptionLogger), new NLogExceptionLogger());
-            //config.Services.Replace(typeof(ITraceWriter), new NLogTraceWriter());
+            config.Services.Replace(typeof(ITraceWriter), new NLogTraceWriter());
             config.Services.Replace(typeof(IHttpControllerActivator), new SmServiceActivator(DependencyResolver.Container));
 
             //config.MessageHandlers.Add(new RequireHttpsHandler());
@@ -96,27 +100,10 @@ namespace SammakEnterprise.JobSearch.Api.Startup
 
             config.EnsureInitialized();
 
-            var isSwaggerEnabled = true;
-            Boolean.TryParse(ConfigurationManager.AppSettings["EnableSwagger"], out isSwaggerEnabled);
-            //if (isSwaggerEnabled)
-            //{
-            //    config.EnableSwagger("docs/{apiVersion}/swagger", c =>
-            //    {
-            //        c.DescribeAllEnumsAsStrings();
-            //        c.SingleApiVersion(Resources.Constants.AppInfo.Version, Resources.Constants.AppInfo.ProductName);
-
-            //        var authorityUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["Authority"]);
-
-            //        c.OAuth2("oauth")
-            //            .AuthorizationUrl(authorityUri.ToString())
-            //            .TokenUrl(new Uri(authorityUri, "connect/token").ToString())
-            //            .Flow("resource_manager");
-            //    }).EnableSwaggerUi(x => x.AddResourceOwnerFlowSupport());
-            //}
-
             Logger.Trace("UseHttpConfig: End HTTP Configuration.");
             return config;
         }
+
     }
 
 }

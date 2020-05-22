@@ -27,7 +27,6 @@ namespace SammakEnterprise.JobSearch.Api
         {
             try
             {
-
                 Logger.Info($"Starting {Resources.Constants.AppInfo.DisplayName}");
 
                 WebApplication = WebApp.Start<Startup.Startup>(ConfigurationManager.AppSettings["OwinUrl"]);

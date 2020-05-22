@@ -106,7 +106,8 @@ namespace SammakEnterprise.JobSearch.Api.Extensions
 
             try
             {
-                if (log != null) log.Error(ex);
+                if (log != null) 
+                    log.Error(ex);
             }
             catch (Exception ex1)
             {
