@@ -316,6 +316,7 @@
     <Compile Include="DatabaseMapping\CompanyMap.cs" />
     <Compile Include="JobSearchAccess\Enums\ApproachType.cs" />
     <Compile Include="JobSearchAccess\Enums\State.cs" />
+    <Compile Include="JobSearchAccess\Service\EntityExpose.cs" />
     <Compile Include="Repository\Company\CompanyRepository.cs" />
     <Compile Include="Repository\Company\ICompanyRepository.cs" />
     <Compile Include="DatabaseMapping\DbConstants.cs" />

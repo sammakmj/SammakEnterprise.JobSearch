@@ -150,6 +150,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
             Id(x => x.Id)
                 .GeneratedBy.Identity();
 
+            Map(x => x.ExternalId)
+              .Not.Nullable()
+                .Index("NCK_Recruiter_ExternalId")
+                .Unique();
+
             Map(x => x.RecruiterEmail);
             Map(x => x.RecruiterMobilePhone);
             Map(x => x.RecruiterName);

@@ -5,7 +5,7 @@ using JobSearchAccessEntity = SammakEnterprise.JobSearch.Middle.JobSearchAccess.
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Status
 {
-    public class StatusExpose
+    public class StatusExpose : EntityExpose
     {
         #region Properties
 
@@ -41,6 +41,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Status
         public StatusExposeMapping()
         {
             CreateMap<JobSearchAccessEntity.Status, StatusExpose>(MemberList.Destination)
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.StatusDate, opt => opt.MapFrom(src => src.StatusDate.ToString(Common.Utilities.DateFormat)))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.InterviewF2F, opt => opt.MapFrom(src => src.InterviewF2F))

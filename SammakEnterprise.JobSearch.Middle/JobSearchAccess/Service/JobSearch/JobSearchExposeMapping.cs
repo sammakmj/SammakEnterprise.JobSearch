@@ -6,7 +6,7 @@ using JobSearchAccessEntity = SammakEnterprise.JobSearch.Middle.JobSearchAccess.
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.JobSearch
 {
-    public class JobSearchExpose
+    public class JobSearchExpose : EntityExpose
     {
         #region Properties
 
@@ -41,6 +41,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.JobSearch
         public JobSearchExposeMapping()
         {
             CreateMap<JobSearchAccessEntity.JobSearch, JobSearchExpose>(MemberList.Destination)
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.InitialDate, opt => opt.MapFrom(src => src.InitialDate))
                 .ForMember(dest => dest.JobTitle, opt => opt.MapFrom(src => src.JobTitle))
                 .ForMember(dest => dest.ApproachMethod, opt => opt.MapFrom(src => src.ApproachMethod))

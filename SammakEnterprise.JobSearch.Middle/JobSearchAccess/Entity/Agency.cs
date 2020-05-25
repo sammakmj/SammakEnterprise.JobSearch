@@ -136,6 +136,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
             Id(x => x.Id)
                 .GeneratedBy.Identity();
 
+            Map(x => x.ExternalId)
+              .Not.Nullable()
+                .Index("NCK_Agency_ExternalId")
+                .Unique();
+
             Map(x => x.AgencyName);
             Map(x => x.WebSite);
 

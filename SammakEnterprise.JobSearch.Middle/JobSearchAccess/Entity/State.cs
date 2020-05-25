@@ -32,6 +32,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
             Id(x => x.Id)
                 .GeneratedBy.Identity();
 
+            Map(x => x.ExternalId)
+              .Not.Nullable()
+                .Index("NCK_State_ExternalId")
+                .Unique();
+
             Map(x => x.StateAbbreviation);
             Map(x => x.StateName);
 

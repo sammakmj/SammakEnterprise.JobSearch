@@ -167,6 +167,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
             Id(x => x.Id)
                 .GeneratedBy.Identity();
 
+            Map(x => x.ExternalId)
+              .Not.Nullable()
+                .Index("NCK_JobSearch_ExternalId")
+                .Unique();
+
             Map(x => x.JobTitle);
             Map(x => x.InitialDate)
                 .CustomSqlType("Date");

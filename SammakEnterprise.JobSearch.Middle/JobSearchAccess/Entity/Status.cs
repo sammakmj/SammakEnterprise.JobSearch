@@ -148,6 +148,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
             Id(x => x.Id)
                 .GeneratedBy.Identity();
 
+            Map(x => x.ExternalId)
+              .Not.Nullable()
+                .Index("NCK_Status_ExternalId")
+                .Unique();
+
             Map(x => x.StatusDate);
             Map(x => x.Description)
                 .Length(4001); // makes the column size to max (nvarchar)
