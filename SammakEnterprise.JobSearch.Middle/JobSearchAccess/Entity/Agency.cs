@@ -1,6 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
 using FluentValidation;
-//using Nlog;
 using SammakEnterprise.Core.Persistence.Domain;
 using SammakEnterprise.Core.Persistence.Domain.Types;
 using SammakEnterprise.Core.Persistence.Validation;
@@ -38,7 +37,6 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// </summary>
         protected Agency()
         {
-            //ExternalId = Guid.NewGuid();
         }
 
         #endregion

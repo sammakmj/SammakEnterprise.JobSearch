@@ -315,6 +315,7 @@
     <Compile Include="DatabaseMapping\AddressMap.cs" />
     <Compile Include="DatabaseMapping\ApproachMap.cs" />
     <Compile Include="DatabaseMapping\CompanyMap.cs" />
+    <Compile Include="JobSearchAccess\Entity\TemplateEntity.cs" />
     <Compile Include="JobSearchAccess\Enums\ApproachType.cs" />
     <Compile Include="JobSearchAccess\Enums\State.cs" />
     <Compile Include="Common\Shared\EntityExpose.cs" />

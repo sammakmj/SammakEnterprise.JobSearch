@@ -1,14 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using FluentValidation;
-//using Nlog;
 using SammakEnterprise.Core.Persistence.Domain;
 using SammakEnterprise.Core.Persistence.Domain.Types;
 using SammakEnterprise.Core.Persistence.Validation;
 using System.Collections.Generic;
 
+
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 {
-    public class ApproachTypeEntity : DomainBase<ApproachTypeEntity>
+    public class TemplateEntity : DomainBase<TemplateEntity>
     {
         #region Properties
 
@@ -19,9 +19,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApproachTypeEntity"/> class.
+        /// Initializes a new instance of the <see cref="TemplateEntity"/> class.
         /// </summary>
-        protected ApproachTypeEntity()
+        protected TemplateEntity()
         {
         }
 
@@ -33,12 +33,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// 
         /// </summary>
         /// <returns></returns>
-        public static ApproachTypeEntity Create(
+        public static TemplateEntity Create(
             string approachMethod,
-            string createdBy = null)
+            string createdBy)
         {
-            createdBy = createdBy ?? Common.Utilities.DefaultUser();
-            var sp = new ApproachTypeEntity
+            var sp = new TemplateEntity
             {
                 ApproachMethod = approachMethod,
                 AuditData = AuditData.Create(createdBy)
@@ -53,12 +52,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// <summary>
         /// Validates this domain object
         /// </summary>
-        public class ApproachTypeValidator : ValidatorBase<ApproachTypeEntity>
+        public class TemplateEntityValidator : ValidatorBase<TemplateEntity>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="AgencyValidator"/> class.
             /// </summary>
-            public ApproachTypeValidator(IValidationFactory validationFactory) : base(validationFactory)
+            public TemplateEntityValidator(IValidationFactory validationFactory) : base(validationFactory)
             {
                 RuleFor(x => x.ApproachMethod)
                     .NotEmpty()
@@ -79,7 +78,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// </returns>
         public override bool Equals(object obj)
         {
-            var other = obj as ApproachTypeEntity;
+            var other = obj as TemplateEntity;
             if (null == other)
                 return false;
 
@@ -100,22 +99,23 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 
     #region FluentNhibernate Mapping
 
-    internal class ApproachTypeMap : ClassMap<ApproachTypeEntity>
+    internal class TemplateEntityMap : ClassMap<TemplateEntity>
     {
-        public ApproachTypeMap()
+        public TemplateEntityMap()
         {
             Schema("JobSearchAccess");
-            Table("ApproachType");
+            Table("TemplateEntity");
 
             Id(x => x.Id)
                 .GeneratedBy.Identity();
 
-            Map(x => x.ApproachMethod);
+            Map(x => x.ExternalId)
+              .Not.Nullable()
+                .Index("NCK_Agency_ExternalId")
+                .Unique();
 
-            Component(x => x.AuditData);
+            Map(x => x.ApproachMethod);
         }
     }
     #endregion
-
 }
-

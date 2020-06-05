@@ -48,7 +48,6 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// </summary>
         protected Recruiter()
         {
-            //ExternalId = Guid.NewGuid();
         }
 
         #endregion
