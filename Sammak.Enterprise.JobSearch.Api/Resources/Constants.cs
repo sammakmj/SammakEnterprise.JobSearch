@@ -51,5 +51,38 @@ namespace SammakEnterprise.JobSearch.Api.Resources
             }
         }
 
+        public static class JobTitleApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "jobtitle";
+                public const string RoutName = "Get All Job Titles";
+            }
+            public static class GetJobTitle
+            {
+                public const string Rout = "jobtitle/{id:guid}";
+                public const string RoutName = "Get Job Title By Id";
+            }
+            public static class CreateJobTitle
+            {
+                public const string Rout = "jobtitle/{name}";
+                public const string RoutName = "Create a new Job Title";
+            }
+        }
+
+        public static class MethodApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "method";
+                public const string RoutName = "Get All Job Approach Methods";
+            }
+            public static class CreateMethod
+            {
+                public const string Rout = "method/{name}";
+                public const string RoutName = "Create a new Job Approach Method";
+            }
+        }
+
     }
 }

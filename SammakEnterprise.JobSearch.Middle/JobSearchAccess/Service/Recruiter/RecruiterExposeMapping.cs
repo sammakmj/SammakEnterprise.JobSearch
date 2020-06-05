@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using SammakEnterprise.JobSearch.Middle.Common.Shared;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using JobSearchAccessEntity = SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Recruiter

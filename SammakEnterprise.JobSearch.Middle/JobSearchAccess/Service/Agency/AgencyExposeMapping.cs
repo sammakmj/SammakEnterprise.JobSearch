@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SammakEnterprise.JobSearch.Middle.Common.Shared;
 using System.Collections.Generic;
 using JobSearchAccessEntity = SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity;
 
