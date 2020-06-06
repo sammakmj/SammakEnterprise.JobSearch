@@ -7,14 +7,14 @@ using System.Linq;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Repository.Agency
 {
-    public class AgencyRepository : RepositoryBase<Entity.Agency, int>, IAgencyRepository
+    public class AgencyRepository : RepositoryBase<Entity.AgencyCompany, int>, IAgencyRepository
     {
         public AgencyRepository(ISession session, IQueryFactory queryFactory, IValidationFactory validationFactory)
         : base(session, queryFactory, validationFactory)
         {
         }
 
-        public Entity.Agency GetAgency(string agencyName)
+        public Entity.AgencyCompany GetAgency(string agencyName)
         {
             return Query(x => x.AgencyName == agencyName).FirstOrDefault();
         }

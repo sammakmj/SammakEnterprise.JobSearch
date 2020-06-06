@@ -24,7 +24,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 
         public virtual string RecruiterName { get; set; }
 
-        public virtual Agency Agency { get; set; }
+        public virtual AgencyCompany Agency { get; set; }
 
         public virtual DateTime InitialContactDate { get; set; }
 

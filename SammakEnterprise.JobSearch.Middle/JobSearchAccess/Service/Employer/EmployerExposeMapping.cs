@@ -53,7 +53,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Employer
     {
         public EmployerExposeMapping()
         {
-            CreateMap<JobSearchAccessEntity.Employer, EmployerExpose>(MemberList.Destination)
+            CreateMap<JobSearchAccessEntity.HiringCompany, EmployerExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.EmployerName, opt => opt.MapFrom(src => src.EmployerName))
                 .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -69,7 +69,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Employer
                 .ForMember(dest => dest.HasBeenApproached, opt => opt.MapFrom(src => src.JobSearches != null && src.JobSearches.Count > 0))
                 ;
 
-            CreateMap<IEnumerable<JobSearchAccessEntity.Employer>, EmployerExposeCollection>(MemberList.Destination)
+            CreateMap<IEnumerable<JobSearchAccessEntity.HiringCompany>, EmployerExposeCollection>(MemberList.Destination)
                 .ForMember(dest => dest.Data, opt => opt.Ignore())
                 .AfterMap((src, dest, context) =>
                 {
@@ -81,7 +81,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Employer
                             dest.Data.Add(null);
                             continue;
                         }
-                        dest.Data.Add(Mapper.Map<JobSearchAccessEntity.Employer, EmployerExpose>(entry));
+                        dest.Data.Add(Mapper.Map<JobSearchAccessEntity.HiringCompany, EmployerExpose>(entry));
                     }
 
                 });

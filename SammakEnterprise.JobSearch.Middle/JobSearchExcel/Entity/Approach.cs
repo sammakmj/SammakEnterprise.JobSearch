@@ -1,47 +1,29 @@
+﻿using FluentNHibernate.Mapping;
+using FluentValidation;
 using SammakEnterprise.Core.Persistence.Domain;
 using SammakEnterprise.Core.Persistence.Domain.Types;
 using SammakEnterprise.Core.Persistence.Validation;
-using SammakEnterprise.JobSearch.Middle.Enums;
+using SammakEnterprise.JobSearchExcel.Middle.Common;
 using System;
 using System.Collections.Generic;
 
-namespace SammakEnterprise.JobSearch.Middle.Entities
+namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 {
     public class Approach : DomainBase<Approach>
     {
         #region Protected variables
 
-        /// <summary>
-        /// The list of <see cref="ApproachStatus"/> 
-        /// </summary>
-        protected readonly IList<ApproachStatus> _approachStatuses = new List<ApproachStatus>();
+        protected readonly IList<Activity> _activities = new List<Activity>();
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///  property InitialDate of the Approach Entity class
-        /// </summary>
-        public virtual DateTime InitialDate { get; protected internal set; }
+        public virtual DateTime InitialDate { get; set; }
 
-        /// <summary>
-        ///  property JobTitle of the Approach Entity class
-        /// </summary>
-        public virtual string JobTitle { get; protected internal set; }
-
-        /// <summary>
-        ///  property ApproachType of the Approach Entity class
-        /// </summary>
-        public virtual ApproachType ApproachType { get; protected internal set; }
-
-        
-        /// <summary>
-        ///  property Approaches of the Approach Entity class
-        /// </summary>
-        public virtual IList<ApproachStatus> ApproachStatuses
+        public virtual IList<Activity> Activities
         {
-            get { return new List<ApproachStatus>(_approachStatuses); }
+            get { return new List<Activity>(_activities); }
         }
 
         #endregion
@@ -65,21 +47,16 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
         /// <returns></returns>
         public static Approach Create(
             DateTime initialDate,
-            Employee recruiter,
-            string jobTitle,
-            Company targetCompany,
-            ApproachType ApproachType,
             string createdBy = null)
         {
             createdBy = createdBy ?? Common.Utilities.DefaultUser();
-            var sp = new Approach
+            var approach = new Approach
             {
                 InitialDate = initialDate,
-                JobTitle = jobTitle,
                 AuditData = AuditData.Create(createdBy)
             };
 
-            return sp;
+            return approach;
         }
 
         #endregion
@@ -100,9 +77,19 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
                 return false;
 
             return
-                InitialDate == other.InitialDate &&
-                ApproachType == other.ApproachType &&
-                JobTitle == other.JobTitle;
+                InitialDate == other.InitialDate;
+        }
+
+        public override int GetHashCode()
+        {
+            const int hashSeed = 486187739;  // a large prime number
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = hashSeed;
+                hash = hash * hashSeed + base.GetHashCode();
+                hash = hash * hashSeed + InitialDate.GetHashCode();
+                return hash;
+            }
         }
 
         /// <summary>
@@ -111,7 +98,8 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString(); // $"+{} {} {} {} {} {} ";
+            var result = $"Approach: {InitialDate}";
+            return result;
         }
 
         #endregion
@@ -124,12 +112,13 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
         public class ApproachValidator : ValidatorBase<Approach>
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ApproachValidator"/> class.
+            /// Initializes a new instance of the <see cref="StatusValidator"/> class.
             /// </summary>
             public ApproachValidator(IValidationFactory validationFactory) : base(validationFactory)
             {
-                //RuleFor(x => x.AreaCode).NotNull();
-                //RuleFor(x => x.Number).NotNull().NotEmpty();
+                RuleFor(x => x.InitialDate)
+                    .NotEmpty()
+                    .WithMessage($"{Constants.JobSearchExcelSchema.ApproachTable.Column.InitialDate} is required");
             }
         }
 
@@ -137,21 +126,36 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
 
         #region Public Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        protected internal virtual bool AddApproachStatus(ApproachStatus approachStatus)
-        {
-            if (_approachStatuses.Contains(approachStatus))
-            {
-                //Logger.Warn($"Trying to Add an employee '{employee.FirstName} {employee.LastName}' which is already in the Employees List collection.");
-                return false;
-            }
-            _approachStatuses.Add(approachStatus);
-            return true;
-        }
-
         #endregion
 
     }
+    internal sealed class ApproachMap : ClassMap<Approach>
+    {
+        public ApproachMap()
+        {
+            Schema(Constants.JobSearchExcelSchema.SchemaName);
+            Table(Constants.JobSearchExcelSchema.ApproachTable.TableName);
+
+            Id(x => x.Id)
+                .Not.Nullable()
+                .GeneratedBy.Identity();
+
+            Map(x => x.ExternalId)
+                .Not.Nullable()
+                .Index(Constants.AnyEntityTables.Index.BaseEntityDbDef_ExternalId)
+                .Unique();
+
+            Map(x => x.InitialDate)
+                .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.InitialDate);
+
+            HasMany(x => x.Activities)
+                .KeyColumns.Add(Constants.JobSearchExcelSchema.ActivityTable.Column.ApproachId)
+                .AsBag()
+                .Inverse()
+                .Cascade.All();
+
+            Component(x => x.AuditData);
+        }
+    }
+
 }

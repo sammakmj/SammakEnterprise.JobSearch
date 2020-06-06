@@ -9,7 +9,7 @@ using Entity = SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency
 {
-    public class AgencyService : ServiceBase<Middle.JobSearchAccess.Entity.Agency, IAgencyRepository>, IAgencyService
+    public class AgencyService : ServiceBase<Middle.JobSearchAccess.Entity.AgencyCompany, IAgencyRepository>, IAgencyService
     {
         private IRecruiterRepository _recruiterRepository;
         private IEmployerRepository _employerRepository;
@@ -33,12 +33,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency
 
         public AgencyExpose CreateAgency(string agencyName)
         {
-            var agency = Entity.Agency.Create(agencyName);
+            var agency = Entity.AgencyCompany.Create(agencyName);
 
             Repository.Add(agency);
 
             agency = Repository.GetAgency(agencyName);
-            return Mapper.Map<Entity.Agency, AgencyExpose>(agency);
+            return Mapper.Map<Entity.AgencyCompany, AgencyExpose>(agency);
 
         }
 
@@ -46,13 +46,13 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency
         public AgencyExpose GetAgency(string agencyName)
         {
             var agency = Repository.GetAgency(agencyName);
-            return Mapper.Map<Entity.Agency, AgencyExpose>(agency);
+            return Mapper.Map<Entity.AgencyCompany, AgencyExpose>(agency);
         }
 
         public AgencyExposeCollection GetAll()
         {
             var allAgencies = Search();
-            return Mapper.Map<IEnumerable<Entity.Agency>, AgencyExposeCollection>(allAgencies);
+            return Mapper.Map<IEnumerable<Entity.AgencyCompany>, AgencyExposeCollection>(allAgencies);
 
         }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Employer
 {
-    public class EmployerService : ServiceBase<Middle.JobSearchAccess.Entity.Employer, IEmployerRepository>, IEmployerService
+    public class EmployerService : ServiceBase<Middle.JobSearchAccess.Entity.HiringCompany, IEmployerRepository>, IEmployerService
     {
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Employer
         public EmployerExposeCollection GetAll()
         {
             var all = Search();
-            var col = Mapper.Map<IEnumerable<Middle.JobSearchAccess.Entity.Employer>, EmployerExposeCollection>(all);
+            var col = Mapper.Map<IEnumerable<Middle.JobSearchAccess.Entity.HiringCompany>, EmployerExposeCollection>(all);
             return col;
 
         }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 {
-    public class Agency : DomainBase<Agency>
+    public class AgencyCompany : DomainBase<AgencyCompany>
     {
         #region Protected variables
 
@@ -33,9 +33,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Agency"/> class.
+        /// Initializes a new instance of the <see cref="AgencyCompany"/> class.
         /// </summary>
-        protected Agency()
+        protected AgencyCompany()
         {
         }
 
@@ -47,12 +47,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// 
         /// </summary>
         /// <returns></returns>
-        public static Agency Create(
+        public static AgencyCompany Create(
             string name,
             string createdBy = null)
         {
             createdBy = createdBy ?? Common.Utilities.DefaultUser();
-            var sp = new Agency
+            var sp = new AgencyCompany
             {
                 AgencyName = name,
                 AuditData = AuditData.Create(createdBy)
@@ -73,7 +73,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// </returns>
         public override bool Equals(object obj)
         {
-            var other = obj as Agency;
+            var other = obj as AgencyCompany;
             if (null == other)
                 return false;
 
@@ -108,7 +108,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// <summary>
         /// Validates an FileStatus domain object
         /// </summary>
-        public class AgencyValidator : ValidatorBase<Agency>
+        public class AgencyValidator : ValidatorBase<AgencyCompany>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="AgencyValidator"/> class.
@@ -124,7 +124,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         #endregion
 
     }
-    internal class AgencyMap : ClassMap<Agency>
+    internal class AgencyMap : ClassMap<AgencyCompany>
     {
         public AgencyMap()
         {

@@ -10,7 +10,7 @@ using FluentNHibernate.Mapping;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 {
-    public class Employer : DomainBase<Employer>
+    public class HiringCompany : DomainBase<HiringCompany>
     {
         #region Protected variables
 
@@ -58,9 +58,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Employer"/> class.
+        /// Initializes a new instance of the <see cref="HiringCompany"/> class.
         /// </summary>
-        protected Employer()
+        protected HiringCompany()
         {
         }
 
@@ -72,12 +72,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// 
         /// </summary>
         /// <returns></returns>
-        public static Employer Create(
+        public static HiringCompany Create(
             string name,
             string createdBy = null)
         {
             createdBy = createdBy ?? Common.Utilities.DefaultUser();
-            var sp = new Employer
+            var sp = new HiringCompany
             {
                 EmployerName = name,
                 AuditData = AuditData.Create(createdBy)
@@ -99,7 +99,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// </returns>
         public override bool Equals(object obj)
         {
-            var other = obj as Employer;
+            var other = obj as HiringCompany;
             if (null == other)
                 return false;
 
@@ -123,7 +123,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
         /// <summary>
         /// Validates an FileStatus domain object
         /// </summary>
-        public class EmployerValidator : ValidatorBase<Employer>
+        public class EmployerValidator : ValidatorBase<HiringCompany>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="EmployerValidator"/> class.
@@ -157,7 +157,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 
     #region FluentNhibernate Mapping
 
-    internal class EmployerMap : ClassMap<Employer>
+    internal class EmployerMap : ClassMap<HiringCompany>
     {
         public EmployerMap()
         {

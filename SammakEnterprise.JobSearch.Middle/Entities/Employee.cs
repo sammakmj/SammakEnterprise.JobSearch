@@ -13,7 +13,7 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
         /// <summary>
         /// The list of <see cref="Employee"/> 
         /// </summary>
-        protected readonly IList<Approach> _approaches = new List<Approach>();
+        protected readonly IList<ApproachOld> _approaches = new List<ApproachOld>();
 
         #endregion
 
@@ -32,9 +32,9 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
         /// <summary>
         ///  property Approaches of the Approach Entity class
         /// </summary>
-        public virtual IList<Approach> Approaches
+        public virtual IList<ApproachOld> Approaches
         {
-            get { return new List<Approach>(_approaches); }
+            get { return new List<ApproachOld>(_approaches); }
         }
 
         #endregion
@@ -127,7 +127,7 @@ namespace SammakEnterprise.JobSearch.Middle.Entities
         /// <summary>
         /// 
         /// </summary>
-        protected internal virtual bool AddApproach(Approach approach)
+        protected internal virtual bool AddApproach(ApproachOld approach)
         {
             if (_approaches.Contains(approach))
             {

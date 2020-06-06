@@ -33,7 +33,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Entity
 
         public virtual Recruiter Recruiter { get; set; }
 
-        public virtual Employer Employer { get; set; }
+        public virtual HiringCompany Employer { get; set; }
 
         public virtual IList<Status> Statuses => new List<Status>(_statuses);
 

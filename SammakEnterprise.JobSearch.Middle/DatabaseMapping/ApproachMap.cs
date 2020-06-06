@@ -7,7 +7,7 @@ namespace SammakEnterprise.JobSearch.Middle.Data.Repository.DatabaseMapping.Appr
     /// FluentNHibernate class mapping file for ExamResponse objects
     /// </summary>
     /// <seealso cref="FluentNHibernate.Mapping.SubclassMap{Approach}" />
-    internal class ApproachMap : SubclassMap<Entities.Approach>
+    internal class ApproachMap : SubclassMap<Entities.ApproachOld>
     {
         public ApproachMap()
         {

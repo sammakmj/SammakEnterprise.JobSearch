@@ -8,7 +8,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Repository.JobSearch
     public interface IJobSearchRepository : IRepository<Entity.JobSearch, int>
     //, IDomainValidationHandler<Entities.Company>
     {
-        Entity.JobSearch GetByRecruiterAnEmployer(Entity.Recruiter recuiter, Entity.Employer employer);
+        Entity.JobSearch GetByRecruiterAnEmployer(Entity.Recruiter recuiter, Entity.HiringCompany employer);
 
         Entity.JobSearch GetByRecruiterAnEmployer(int recuiterId, int employerId);
 

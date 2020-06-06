@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 {
-    public class JobTitle : DomainBase<JobTitle>
+    public class Location : DomainBase<Location>
     {
         #region Protected variables
 
@@ -30,9 +30,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobTitle"/> class.
+        /// Initializes a new instance of the <see cref="Location"/> class.
         /// </summary>
-        protected JobTitle()
+        protected Location()
         {
         }
 
@@ -44,18 +44,18 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// 
         /// </summary>
         /// <returns></returns>
-        public static JobTitle Create(
+        public static Location Create(
             string name,
             string createdBy = null)
         {
             createdBy = createdBy ?? Common.Utilities.DefaultUser();
-            var jobTitle = new JobTitle
+            var location = new Location
             {
                 Name = name,
                 AuditData = AuditData.Create(createdBy)
             };
 
-            return jobTitle;
+            return location;
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// </returns>
         public override bool Equals(object obj)
         {
-            var other = obj as JobTitle;
+            var other = obj as Location;
             if (null == other)
                 return false;
 
@@ -108,16 +108,16 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// <summary>
         /// Validates an FileStatus domain object
         /// </summary>
-        public class JobTitleValidator : ValidatorBase<JobTitle>
+        public class LocationValidator : ValidatorBase<Location>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="StatusValidator"/> class.
             /// </summary>
-            public JobTitleValidator(IValidationFactory validationFactory) : base(validationFactory)
+            public LocationValidator(IValidationFactory validationFactory) : base(validationFactory)
             {
                 RuleFor(x => x.Name)
                     .NotEmpty()
-                    .WithMessage($"{Constants.JobSearchExcelSchema.JobTitleTable.Column.Name} is required");
+                    .WithMessage($"{Constants.JobSearchExcelSchema.LocationTable.Column.Name} is required");
             }
         }
 
@@ -128,12 +128,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         #endregion
 
     }
-    internal sealed class JobTitleMap : ClassMap<JobTitle>
+    internal sealed class LocationMap : ClassMap<Location>
     {
-        public JobTitleMap()
+        public LocationMap()
         {
             Schema(Constants.JobSearchExcelSchema.SchemaName);
-            Table(Constants.JobSearchExcelSchema.JobTitleTable.TableName);
+            Table(Constants.JobSearchExcelSchema.LocationTable.TableName);
 
             Id(x => x.Id)
                 .Not.Nullable()
@@ -145,10 +145,10 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
                 .Unique();
 
             Map(x => x.Name)
-                .Column(Constants.JobSearchExcelSchema.JobTitleTable.Column.Name);
+                .Column(Constants.JobSearchExcelSchema.LocationTable.Column.Name);
 
             HasMany(x => x.Approaches)
-                .KeyColumns.Add(Constants.JobSearchExcelSchema.ApproachTable.Column.JobTitleId)
+                .KeyColumns.Add(Constants.JobSearchExcelSchema.ApproachTable.Column.LocationId)
                 .AsBag()
                 .Inverse()
                 .Cascade.All();

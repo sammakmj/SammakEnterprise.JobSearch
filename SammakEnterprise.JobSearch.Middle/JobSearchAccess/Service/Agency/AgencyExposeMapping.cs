@@ -32,7 +32,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency
     {
         public AgencyExposeMapping()
         {
-            CreateMap<JobSearchAccessEntity.Agency, AgencyExpose>(MemberList.Destination)
+            CreateMap<JobSearchAccessEntity.AgencyCompany, AgencyExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.AgencyName, opt => opt.MapFrom(src => src.AgencyName))
                 .ForMember(dest => dest.WebSite, opt => opt.MapFrom(src => src.WebSite))
@@ -56,7 +56,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency
 
                 });
 
-            CreateMap<IEnumerable<JobSearchAccessEntity.Agency>, AgencyExposeCollection>(MemberList.Destination)
+            CreateMap<IEnumerable<JobSearchAccessEntity.AgencyCompany>, AgencyExposeCollection>(MemberList.Destination)
                 .ForMember(dest => dest.Data, opt => opt.Ignore())
                 .AfterMap((src, dest, context) =>
                 {
@@ -68,7 +68,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency
                             dest.Data.Add(null);
                             continue;
                         }
-                        dest.Data.Add(Mapper.Map<JobSearchAccessEntity.Agency, AgencyExpose>(entry));
+                        dest.Data.Add(Mapper.Map<JobSearchAccessEntity.AgencyCompany, AgencyExpose>(entry));
                     }
 
                 });

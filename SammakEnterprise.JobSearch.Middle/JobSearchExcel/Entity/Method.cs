@@ -4,14 +4,26 @@ using SammakEnterprise.Core.Persistence.Domain;
 using SammakEnterprise.Core.Persistence.Domain.Types;
 using SammakEnterprise.Core.Persistence.Validation;
 using SammakEnterprise.JobSearchExcel.Middle.Common;
+using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 {
     public class Method : DomainBase<Method>
     {
+        #region Protected variables
+
+        protected readonly IList<Approach> _approaches = new List<Approach>();
+
+        #endregion
+
         #region Properties
 
         public virtual string Name { get; set; }
+
+        public virtual IList<Approach> Approaches
+        {
+            get { return new List<Approach>(_approaches); }
+        }
 
         #endregion
 
@@ -134,6 +146,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
             Map(x => x.Name)
                 .Column(Constants.JobSearchExcelSchema.MethodTable.Column.Name);
+
+            HasMany(x => x.Approaches)
+                .KeyColumns.Add(Constants.JobSearchExcelSchema.ApproachTable.Column.MethodId)
+                .AsBag()
+                .Inverse()
+                .Cascade.All();
 
             Component(x => x.AuditData);
         }

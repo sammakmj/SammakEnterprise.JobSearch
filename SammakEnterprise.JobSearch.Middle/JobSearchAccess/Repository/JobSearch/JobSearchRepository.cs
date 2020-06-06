@@ -14,7 +14,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchAccess.Repository.JobSearch
         {
         }
 
-        public Entity.JobSearch GetByRecruiterAnEmployer(Entity.Recruiter recuiter, Entity.Employer employer)
+        public Entity.JobSearch GetByRecruiterAnEmployer(Entity.Recruiter recuiter, Entity.HiringCompany employer)
         {
             var jobSearch = Query().FirstOrDefault(x => x.Recruiter == recuiter && x.Employer == employer);
             //var jobSearch = Query(x => x.Recruiter.Id == recuiterId && x.Employer.Id == employerId).FirstOrDefault();

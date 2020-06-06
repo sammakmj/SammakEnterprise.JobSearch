@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 {
-    public class JobTitle : DomainBase<JobTitle>
+    public class Employer : DomainBase<Employer>
     {
         #region Protected variables
 
@@ -20,6 +20,8 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
         public virtual string Name { get; set; }
 
+        public virtual string WebSite { get; set; }
+
         public virtual IList<Approach> Approaches
         {
             get { return new List<Approach>(_approaches); }
@@ -30,9 +32,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobTitle"/> class.
+        /// Initializes a new instance of the <see cref="Employer"/> class.
         /// </summary>
-        protected JobTitle()
+        protected Employer()
         {
         }
 
@@ -44,18 +46,20 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// 
         /// </summary>
         /// <returns></returns>
-        public static JobTitle Create(
+        public static Employer Create(
             string name,
+            string webSite = null,
             string createdBy = null)
         {
             createdBy = createdBy ?? Common.Utilities.DefaultUser();
-            var jobTitle = new JobTitle
+            var employer = new Employer
             {
                 Name = name,
+                WebSite = webSite,
                 AuditData = AuditData.Create(createdBy)
             };
 
-            return jobTitle;
+            return employer;
         }
 
         #endregion
@@ -71,7 +75,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// </returns>
         public override bool Equals(object obj)
         {
-            var other = obj as JobTitle;
+            var other = obj as Employer;
             if (null == other)
                 return false;
 
@@ -108,16 +112,16 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// <summary>
         /// Validates an FileStatus domain object
         /// </summary>
-        public class JobTitleValidator : ValidatorBase<JobTitle>
+        public class EmployerValidator : ValidatorBase<Employer>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="StatusValidator"/> class.
             /// </summary>
-            public JobTitleValidator(IValidationFactory validationFactory) : base(validationFactory)
+            public EmployerValidator(IValidationFactory validationFactory) : base(validationFactory)
             {
                 RuleFor(x => x.Name)
                     .NotEmpty()
-                    .WithMessage($"{Constants.JobSearchExcelSchema.JobTitleTable.Column.Name} is required");
+                    .WithMessage($"{Constants.JobSearchExcelSchema.EmployerTable.Column.Name} is required");
             }
         }
 
@@ -128,12 +132,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         #endregion
 
     }
-    internal sealed class JobTitleMap : ClassMap<JobTitle>
+    internal sealed class EmployerMap : ClassMap<Employer>
     {
-        public JobTitleMap()
+        public EmployerMap()
         {
             Schema(Constants.JobSearchExcelSchema.SchemaName);
-            Table(Constants.JobSearchExcelSchema.JobTitleTable.TableName);
+            Table(Constants.JobSearchExcelSchema.EmployerTable.TableName);
 
             Id(x => x.Id)
                 .Not.Nullable()
@@ -145,10 +149,13 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
                 .Unique();
 
             Map(x => x.Name)
-                .Column(Constants.JobSearchExcelSchema.JobTitleTable.Column.Name);
+                .Column(Constants.JobSearchExcelSchema.EmployerTable.Column.Name);
+
+            Map(x => x.WebSite)
+                .Column(Constants.JobSearchExcelSchema.EmployerTable.Column.WebSite);
 
             HasMany(x => x.Approaches)
-                .KeyColumns.Add(Constants.JobSearchExcelSchema.ApproachTable.Column.JobTitleId)
+                .KeyColumns.Add(Constants.JobSearchExcelSchema.ApproachTable.Column.EmployerId)
                 .AsBag()
                 .Inverse()
                 .Cascade.All();
