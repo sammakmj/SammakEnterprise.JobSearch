@@ -1,5 +1,5 @@
 ﻿using SammakEnterprise.Core.Common.Api.Controllers;
-using SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service.JobTitle;
+using SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service;
 using System;
 using System.Net;
 using System.Web.Http;
