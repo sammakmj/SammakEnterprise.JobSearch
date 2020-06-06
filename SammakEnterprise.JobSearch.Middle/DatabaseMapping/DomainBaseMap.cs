@@ -32,7 +32,7 @@ namespace SammakEnterprise.JobSearch.Middle.Data
             Map(x => x.ExternalId)
                 .Column(AnyEntityTables.Column.ExternalId)
               .Not.Nullable()
-                .Index(AnyEntityTables.Index.BaseEntityDbDef_ExternalId)
+                //.Index(AnyEntityTables.Index.BaseEntityDbDef_ExternalId)
                 .Unique();
 
             Component(x => x.AuditData);

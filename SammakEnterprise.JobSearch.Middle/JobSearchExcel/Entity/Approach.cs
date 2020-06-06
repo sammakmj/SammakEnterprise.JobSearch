@@ -143,7 +143,10 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
             Map(x => x.ExternalId)
                 .Not.Nullable()
                 .Index(Constants.AnyEntityTables.Index.BaseEntityDbDef_ExternalId)
-                .Unique();
+                .Generated.Insert()
+                .ReadOnly()
+                .Unique()
+                .Not.Nullable();
 
             Map(x => x.InitialDate)
                 .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.InitialDate);
