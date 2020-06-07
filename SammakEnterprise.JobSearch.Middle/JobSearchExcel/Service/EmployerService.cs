@@ -60,6 +60,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         #region Properties
 
         public string Name { get; set; }
+        public string WebSite { get; set; }
 
         #endregion
     }
@@ -81,6 +82,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             CreateMap<Entity.Employer, EmployerExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.WebSite, opt => opt.MapFrom(src => src.WebSite))
                 ;
 
             CreateMap<IEnumerable<Entity.Employer>, EmployerExposeCollection>(MemberList.Destination)

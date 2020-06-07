@@ -73,6 +73,10 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         #region Properties
 
         public DateTime ActivityDate { get; set; }
+        public string ActivityNote { get; internal set; }
+        public bool PhoneInterview { get; internal set; }
+        public bool TestInterview { get; internal set; }
+        public bool FaceToFaceInterview { get; internal set; }
 
         #endregion
     }
@@ -94,6 +98,10 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             CreateMap<Activity, ActivityExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.ActivityDate, opt => opt.MapFrom(src => src.ActivityDate))
+                .ForMember(dest => dest.ActivityNote, opt => opt.MapFrom(src => src.ActivityNote))
+                .ForMember(dest => dest.PhoneInterview, opt => opt.MapFrom(src => src.PhoneInterview))
+                .ForMember(dest => dest.FaceToFaceInterview, opt => opt.MapFrom(src => src.FaceToFaceInterview))
+                .ForMember(dest => dest.TestInterview, opt => opt.MapFrom(src => src.TestInterview))
                 ;
 
             CreateMap<IEnumerable<Activity>, ActivityExposeCollection>(MemberList.Destination)

@@ -72,6 +72,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         #region Properties
 
         public string Name { get; set; }
+        public string Email { get; internal set; }
+        public string MobilePhone { get; internal set; }
+        public string OfficePhone { get; internal set; }
 
         #endregion
     }
@@ -93,6 +96,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             CreateMap<Agent, AgentExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.MobilePhone, opt => opt.MapFrom(src => src.MobilePhone))
+                .ForMember(dest => dest.OfficePhone, opt => opt.MapFrom(src => src.OfficePhone))
                 ;
 
             CreateMap<IEnumerable<Agent>, AgentExposeCollection>(MemberList.Destination)
