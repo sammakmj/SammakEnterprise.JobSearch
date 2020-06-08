@@ -316,17 +316,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\StatusController.cs" />
-    <Compile Include="Controllers\JobSearchController.cs" />
-    <Compile Include="Controllers\RecruiterController.cs" />
-    <Compile Include="Controllers\EmployerController.cs" />
-    <Compile Include="Controllers\AppInfoController.cs" />
-    <Compile Include="Controllers\AgencyController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="ExceptionHandling\GlobalExceptionHandler.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="JobSearchApiApp.cs" />
+    <Compile Include="JobSearchExcel\Controllers\ApproachController.cs" />
+    <Compile Include="JobSearchExcel\Controllers\AgentController.cs" />
+    <Compile Include="JobSearchExcel\Controllers\AgencyController.cs" />
+    <Compile Include="JobSearchExcel\Controllers\EmployerController.cs" />
+    <Compile Include="JobSearchExcel\Controllers\ActivityController.cs" />
+    <Compile Include="JobSearchExcel\Controllers\LocationController.cs" />
     <Compile Include="JobSearchExcel\Controllers\JobTitleController.cs" />
     <Compile Include="JobSearchExcel\Controllers\MethodController.cs" />
     <Compile Include="Program.cs" />
@@ -391,6 +390,9 @@
     <Content Include="assets\js\main.config.js" />
     <Content Include="assets\js\placeholders.min.js" />
     <Content Include="assets\js\shader.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

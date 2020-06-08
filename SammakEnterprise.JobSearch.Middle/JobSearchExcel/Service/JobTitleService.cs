@@ -42,7 +42,6 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             var all = Search();
             var col = Mapper.Map<IEnumerable<Entity.JobTitle>, JobTitleExposeCollection>(all);
             return col;
-
         }
 
         public JobTitleExpose GetById(Guid id)
@@ -50,7 +49,6 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             var jobTitle = Load(id);
             var output = Mapper.Map<Entity.JobTitle, JobTitleExpose>(jobTitle);
             return output;
-
         }
 
         public JobTitleExpose CreateJobTitle(string name)
@@ -73,6 +71,8 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
 
         public string Name { get; set; }
 
+        public List<ChildExpose> Approaches { get; set; }
+
         #endregion
     }
 
@@ -93,6 +93,22 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             CreateMap<JobTitle, JobTitleExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Approaches, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if (src.Approaches != null)
+                    {
+                        dest.Approaches = new List<ChildExpose>();
+                        foreach (var entry in src.Approaches)
+                        {
+                            dest.Approaches.Add(new ChildExpose
+                            {
+                                Id = entry.ExternalId,
+                                Description = entry.ToString()
+                            });
+                        }
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<JobTitle>, JobTitleExposeCollection>(MemberList.Destination)

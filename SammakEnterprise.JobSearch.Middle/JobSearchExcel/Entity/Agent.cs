@@ -26,6 +26,8 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
         public virtual string OfficePhone { get; set; }
 
+        public virtual Agency Agency { get; set; }
+
         public virtual IList<Approach> Approaches
         {
             get { return new List<Approach>(_approaches); }
@@ -87,12 +89,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
         public override int GetHashCode()
         {
-            const int hashSeed = 486187739;  // a large prime number
             unchecked // Overflow is fine, just wrap
             {
-                int hash = hashSeed;
-                hash = hash * hashSeed + base.GetHashCode();
-                hash = hash * hashSeed + Name.GetHashCode();
+                int hash = Constants.HashSeed;
+                hash = hash * Constants.HashSeed + base.GetHashCode();
+                hash = hash * Constants.HashSeed + Name.GetHashCode();
+                //hash = hash * Constants.HashSeed + AgencyId.GetHashCode();
                 return hash;
             }
         }
@@ -103,8 +105,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// <returns></returns>
         public override string ToString()
         {
-            var result = $"Job Title: {Name}";
-            return result;
+            return $"{Name}";
         }
 
         #endregion
@@ -153,6 +154,10 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
             Map(x => x.Name)
                 .Column(Constants.JobSearchExcelSchema.AgentTable.Column.Name);
+
+            References(x => x.Agency)
+                .Column(Constants.JobSearchExcelSchema.AgentTable.Column.AgencyId)
+                .Cascade.All();
 
             Map(x => x.Email)
                 .Column(Constants.JobSearchExcelSchema.AgentTable.Column.Email);

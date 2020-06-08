@@ -37,6 +37,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// </summary>
         public virtual bool TestInterview { get; protected internal set; }
 
+        /// <summary>
+        ///  property Approach of the Activity Entity class
+        /// </summary>
+        public virtual Approach Approach { get; protected internal set; }
+
         #endregion
 
         #region Constructors
@@ -99,13 +104,12 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
         public override int GetHashCode()
         {
-            const int hashSeed = 486187739;  // a large prime number
             unchecked // Overflow is fine, just wrap
             {
-                int hash = hashSeed;
-                hash = hash * hashSeed + base.GetHashCode();
-                hash = hash * hashSeed + ActivityDate.GetHashCode();
-                hash = hash * hashSeed + ActivityNote.GetHashCode();
+                int hash = Constants.HashSeed;
+                hash = hash * Constants.HashSeed + base.GetHashCode();
+                hash = hash * Constants.HashSeed + ActivityDate.GetHashCode();
+                hash = hash * Constants.HashSeed + ActivityNote.GetHashCode();
                 return hash;
             }
         }
@@ -116,8 +120,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// <returns></returns>
         public override string ToString()
         {
-            var result = $"Job Status: {ActivityDate: MM dd, yyyy}: {ActivityNote}";
-            return result;
+            return $"{ActivityDate:MMMM dd, yyyy}: {ActivityNote}";
         }
 
         #endregion
@@ -183,6 +186,10 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
             Map(x => x.TestInterview)
                 .CustomSqlType("BIT")
                 .Column(Constants.JobSearchExcelSchema.ActivityTable.Column.TestInterview);
+
+            References(x => x.Approach)
+                .Column(Constants.JobSearchExcelSchema.ActivityTable.Column.ApproachId)
+                .Cascade.All();
 
             Component(x => x.AuditData);
         }

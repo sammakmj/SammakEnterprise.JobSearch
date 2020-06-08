@@ -75,6 +75,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         public string Email { get; internal set; }
         public string MobilePhone { get; internal set; }
         public string OfficePhone { get; internal set; }
+        public ChildExpose Agency { get; set; }
+
+        public List<ChildExpose> Approaches { get; set; }
 
         #endregion
     }
@@ -99,6 +102,31 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.MobilePhone, opt => opt.MapFrom(src => src.MobilePhone))
                 .ForMember(dest => dest.OfficePhone, opt => opt.MapFrom(src => src.OfficePhone))
+                .ForMember(dest => dest.Agency, opt => opt.Ignore())
+                .ForMember(dest => dest.Approaches, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if (src.Agency != null)
+                    {
+                        dest.Agency = new ChildExpose
+                        {
+                            Id = src.Agency.ExternalId,
+                            Description = src.Agency.ToString()
+                        };
+                    }
+                    if (src.Approaches != null)
+                    {
+                        dest.Approaches = new List<ChildExpose>();
+                        foreach (var entry in src.Approaches)
+                        {
+                            dest.Approaches.Add(new ChildExpose
+                            {
+                                Id = entry.ExternalId,
+                                Description = entry.ToString()
+                            });
+                        }
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<Agent>, AgentExposeCollection>(MemberList.Destination)

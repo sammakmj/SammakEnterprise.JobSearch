@@ -77,6 +77,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         public bool PhoneInterview { get; internal set; }
         public bool TestInterview { get; internal set; }
         public bool FaceToFaceInterview { get; internal set; }
+        public ChildExpose Approach { get; set; }
 
         #endregion
     }
@@ -102,6 +103,18 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
                 .ForMember(dest => dest.PhoneInterview, opt => opt.MapFrom(src => src.PhoneInterview))
                 .ForMember(dest => dest.FaceToFaceInterview, opt => opt.MapFrom(src => src.FaceToFaceInterview))
                 .ForMember(dest => dest.TestInterview, opt => opt.MapFrom(src => src.TestInterview))
+                .ForMember(dest => dest.Approach, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if (src.Approach != null)
+                    {
+                        dest.Approach = new ChildExpose
+                        {
+                            Id = src.Approach.ExternalId,
+                            Description = src.Approach.ToString()
+                        };
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<Activity>, ActivityExposeCollection>(MemberList.Destination)

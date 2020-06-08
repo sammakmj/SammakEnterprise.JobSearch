@@ -4,6 +4,7 @@ using SammakEnterprise.Core.Persistence.Services.Impl;
 using SammakEnterprise.Core.Persistence.Validation;
 using SammakEnterprise.JobSearch.Middle.Common.Shared;
 using SammakEnterprise.JobSearch.Middle.JobSearchExcel.Repository;
+using System;
 using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
@@ -14,6 +15,8 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         EmployerExposeCollection GetAll();
 
         EmployerExpose CreateEmployer(string name);
+
+        EmployerExpose GetById(Guid id);
     }
     #endregion
 
@@ -43,14 +46,19 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
 
         public EmployerExpose CreateEmployer(string name)
         {
-            var jobTitle = Entity.Employer.Create(name);
+            var employer = Entity.Employer.Create(name);
 
-            Repository.Add(jobTitle);
+            Repository.Add(employer);
 
-            jobTitle = Repository.GetEmployer(name);
-            return Mapper.Map<Entity.Employer, EmployerExpose>(jobTitle);
+            employer = Repository.GetEmployer(name);
+            return Mapper.Map<Entity.Employer, EmployerExpose>(employer);
         }
 
+        public EmployerExpose GetById(Guid id)
+        {
+            var employer = Repository.Load(id);
+            return Mapper.Map<Entity.Employer, EmployerExpose>(employer);
+        }
     }
     #endregion
 
@@ -61,6 +69,8 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
 
         public string Name { get; set; }
         public string WebSite { get; set; }
+
+        public List<ChildExpose> Approaches { get; set; }
 
         #endregion
     }
@@ -83,6 +93,22 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.WebSite, opt => opt.MapFrom(src => src.WebSite))
+                .ForMember(dest => dest.Approaches, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if (src.Approaches != null)
+                    {
+                        dest.Approaches = new List<ChildExpose>();
+                        foreach (var entry in src.Approaches)
+                        {
+                            dest.Approaches.Add(new ChildExpose
+                            {
+                                Id = entry.ExternalId,
+                                Description = entry.ToString()
+                            });
+                        }
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<Entity.Employer>, EmployerExposeCollection>(MemberList.Destination)

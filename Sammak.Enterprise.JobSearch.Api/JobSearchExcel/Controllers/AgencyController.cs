@@ -1,11 +1,17 @@
-﻿using Newtonsoft.Json;
-using SammakEnterprise.Core.Common.Api.Controllers;
-using SammakEnterprise.JobSearch.Middle.JobSearchAccess.Service.Agency;
+﻿using SammakEnterprise.Core.Common.Api.Controllers;
+using SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service;
 using System;
+using System.Net;
 using System.Web.Http;
+using SammakEnterprise.Core.Common.Api.Constants.Messages;
+using NHibernate.Mapping;
+using System.Collections.Generic;
 
-namespace SammakEnterprise.JobSearch.Api.Controllers
+namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [RoutePrefix(Resources.Constants.AppInfo.RoutePrefix)]
     public class AgencyController : ControllerBase
     {
@@ -34,13 +40,13 @@ namespace SammakEnterprise.JobSearch.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("agencies", Name = "Get All Agencies")]
-        public IHttpActionResult GetAllAgencies()
+        [Route(Resources.Constants.AgencyApi.GetAll.Rout, Name = Resources.Constants.AgencyApi.GetAll.RoutName)]
+        public IHttpActionResult GetAllAgencys()
         {
             try
             {
-                var agencies = _agencyService.GetAll();
-                return Ok(agencies);
+                var agencys = _agencyService.GetAll();
+                return Ok(agencys);
             }
 
             catch (Exception ex)
@@ -54,16 +60,17 @@ namespace SammakEnterprise.JobSearch.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("agency/{name}", Name = "Get Agency by Name")]
-        public IHttpActionResult GetAllAgency(string name)
+        [Route(Resources.Constants.AgencyApi.GetAgency.Rout, Name = Resources.Constants.AgencyApi.GetAgency.RoutName)]
+        public IHttpActionResult GetAgency(Guid id)
         {
             try
             {
-                var agencyName = Util.Utilities.ReplaceDashesWithSpaces(name);
-                var agencies = _agencyService.GetAgency(agencyName);
-                return Ok(agencies);
-            }
+                var agency = _agencyService.GetById(id);
+                if (agency == null)
+                    return Content(HttpStatusCode.NotFound, ErrorMessages.NotFound("Agency by id", id));
 
+                return Ok(agency);
+            }
             catch (Exception ex)
             {
                 return ExceptionError(ex);
@@ -75,7 +82,7 @@ namespace SammakEnterprise.JobSearch.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("agency/{name}", Name = "Create Agency by Name")]
+        [Route(Resources.Constants.AgencyApi.CreateAgency.Rout, Name = Resources.Constants.AgencyApi.CreateAgency.RoutName)]
         public IHttpActionResult CreateAgency(string name)
         {
             try

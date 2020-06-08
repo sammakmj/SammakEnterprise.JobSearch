@@ -4,6 +4,7 @@ using SammakEnterprise.Core.Persistence.Domain;
 using SammakEnterprise.Core.Persistence.Domain.Types;
 using SammakEnterprise.Core.Persistence.Validation;
 using SammakEnterprise.JobSearchExcel.Middle.Common;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 
@@ -20,6 +21,16 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         #region Properties
 
         public virtual DateTime InitialDate { get; set; }
+
+        protected internal virtual Agent Agent { get; set; }
+
+        protected internal virtual Method Method { get; set; }
+
+        protected internal virtual JobTitle JobTitle { get; set; }
+
+        protected internal virtual Location Location { get; set; }
+
+        protected internal virtual Employer Employer { get; set; }
 
         public virtual IList<Activity> Activities
         {
@@ -82,12 +93,16 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
         public override int GetHashCode()
         {
-            const int hashSeed = 486187739;  // a large prime number
             unchecked // Overflow is fine, just wrap
             {
-                int hash = hashSeed;
-                hash = hash * hashSeed + base.GetHashCode();
-                hash = hash * hashSeed + InitialDate.GetHashCode();
+                int hash = Constants.HashSeed;
+                hash = hash * Constants.HashSeed + base.GetHashCode();
+                hash = InitialDate == null ? hash : hash * Constants.HashSeed + InitialDate.GetHashCode();
+                hash = Agent == null ? hash : hash * Constants.HashSeed + Agent.GetHashCode();
+                hash = Method == null ? hash * Constants.HashSeed + Method.GetHashCode() : hash;
+                hash = Location == null ? hash : hash * Constants.HashSeed + Location.GetHashCode();
+                hash = JobTitle == null ? hash : hash * Constants.HashSeed + JobTitle.GetHashCode();
+                hash = Employer == null ? hash : hash * Constants.HashSeed + Employer.GetHashCode();
                 return hash;
             }
         }
@@ -98,8 +113,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// <returns></returns>
         public override string ToString()
         {
-            var result = $"Approach: {InitialDate}";
-            return result;
+            return $"{InitialDate:MMMM dd, yyyy}";
         }
 
         #endregion
@@ -150,6 +164,26 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
             Map(x => x.InitialDate)
                 .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.InitialDate);
+
+            References(x => x.Agent)
+                .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.AgentId)
+                .Cascade.All();
+
+            References(x => x.Employer)
+                .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.EmployerId)
+                .Cascade.All();
+
+            References(x => x.JobTitle)
+                .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.JobTitleId)
+                .Cascade.All();
+
+            References(x => x.Location)
+                .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.LocationId)
+                .Cascade.All();
+
+            References(x => x.Method)
+                .Column(Constants.JobSearchExcelSchema.ApproachTable.Column.MethodId)
+                .Cascade.All();
 
             HasMany(x => x.Activities)
                 .KeyColumns.Add(Constants.JobSearchExcelSchema.ActivityTable.Column.ApproachId)

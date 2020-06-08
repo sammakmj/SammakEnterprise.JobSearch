@@ -310,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\Shared\ChildExpose.cs" />
     <Compile Include="Common\Utilities.cs" />
     <Compile Include="DatabaseMapping\DomainBaseMap.cs" />
     <Compile Include="DatabaseMapping\AddressMap.cs" />

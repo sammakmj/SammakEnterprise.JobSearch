@@ -70,6 +70,101 @@ namespace SammakEnterprise.JobSearch.Api.Resources
             }
         }
 
+        public static class ActivityApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "activity";
+                public const string RoutName = "Get All Activities";
+            }
+            public static class GetActivity
+            {
+                public const string Rout = "activity/{id:guid}";
+                public const string RoutName = "Get Activity By Id";
+            }
+            public static class CreateActivity
+            {
+                public const string Rout = "activity/{name}";
+                public const string RoutName = "Create a new Activity";
+            }
+        }
+
+        public static class EmployerApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "employer";
+                public const string RoutName = "Get All Employers";
+            }
+            public static class GetEmployer
+            {
+                public const string Rout = "employer/{id:guid}";
+                public const string RoutName = "Get Employer By Id";
+            }
+            public static class CreateEmployer
+            {
+                public const string Rout = "employer/{name}";
+                public const string RoutName = "Create a new Employer";
+            }
+        }
+
+        public static class AgencyApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "agency";
+                public const string RoutName = "Get All Agencies";
+            }
+            public static class GetAgency
+            {
+                public const string Rout = "agency/{id:guid}";
+                public const string RoutName = "Get Agency By Id";
+            }
+            public static class CreateAgency
+            {
+                public const string Rout = "agency/{name}";
+                public const string RoutName = "Create a new Agency";
+            }
+        }
+
+        public static class AgentApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "agent";
+                public const string RoutName = "Get All Agents";
+            }
+            public static class GetAgent
+            {
+                public const string Rout = "agent/{id:guid}";
+                public const string RoutName = "Get Agent By Id";
+            }
+            public static class CreateAgent
+            {
+                public const string Rout = "agent/{name}";
+                public const string RoutName = "Create a new Agent";
+            }
+        }
+
+        public static class LocationApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "location";
+                public const string RoutName = "Get All locations";
+            }
+            public static class GetLocation
+            {
+                public const string Rout = "location/{id:guid}";
+                public const string RoutName = "Get Job Location By Id";
+            }
+            public static class CreateLocation
+            {
+                public const string Rout = "location/{name}";
+                public const string RoutName = "Create a new Job Location";
+            }
+        }
+
         public static class MethodApi
         {
             public static class GetAll
@@ -81,6 +176,25 @@ namespace SammakEnterprise.JobSearch.Api.Resources
             {
                 public const string Rout = "method/{name}";
                 public const string RoutName = "Create a new Job Approach Method";
+            }
+        }
+
+        public static class ApproachApi
+        {
+            public static class GetAll
+            {
+                public const string Rout = "approach";
+                public const string RoutName = "Get All Job Approaches";
+            }
+            public static class GetApproach
+            {
+                public const string Rout = "approach/{id:guid}";
+                public const string RoutName = "Get Job Approach By Id";
+            }
+            public static class CreateApproach
+            {
+                public const string Rout = "jobtitle/{name}";
+                public const string RoutName = "Create a new Job Approach";
             }
         }
 

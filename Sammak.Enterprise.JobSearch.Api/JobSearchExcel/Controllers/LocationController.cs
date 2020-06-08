@@ -4,8 +4,6 @@ using System;
 using System.Net;
 using System.Web.Http;
 using SammakEnterprise.Core.Common.Api.Constants.Messages;
-using NHibernate.Mapping;
-using System.Collections.Generic;
 
 namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
 {
@@ -13,22 +11,22 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
     /// 
     /// </summary>
     [RoutePrefix(Resources.Constants.AppInfo.RoutePrefix)]
-    public class JobTitleController : ControllerBase
+    public class LocationController : ControllerBase
     {
         #region Properties
 
-        private readonly IJobTitleService _jobTitleService;
+        private readonly ILocationService _locationService;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobTitleController"/> class.
+        /// Initializes a new instance of the <see cref="LocationController"/> class.
         /// </summary>
-        public JobTitleController(IJobTitleService jobTitleService)
+        public LocationController(ILocationService locationService)
         {
-            _jobTitleService = jobTitleService;
+            _locationService = locationService;
         }
 
         #endregion
@@ -40,13 +38,13 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route(Resources.Constants.JobTitleApi.GetAll.Rout, Name = Resources.Constants.JobTitleApi.GetAll.RoutName)]
-        public IHttpActionResult GetAllJobTitles()
+        [Route(Resources.Constants.LocationApi.GetAll.Rout, Name = Resources.Constants.LocationApi.GetAll.RoutName)]
+        public IHttpActionResult GetAllLocations()
         {
             try
             {
-                var jobTitles = _jobTitleService.GetAll();
-                return Ok(jobTitles);
+                var locations = _locationService.GetAll();
+                return Ok(locations);
             }
 
             catch (Exception ex)
@@ -60,16 +58,16 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route(Resources.Constants.JobTitleApi.GetJobTitle.Rout, Name = Resources.Constants.JobTitleApi.GetJobTitle.RoutName)]
-        public IHttpActionResult GetJobTitle(Guid id)
+        [Route(Resources.Constants.LocationApi.GetLocation.Rout, Name = Resources.Constants.LocationApi.GetLocation.RoutName)]
+        public IHttpActionResult GetLocation(Guid id)
         {
             try
             {
-                var jobTitle = _jobTitleService.GetById(id);
-                if (jobTitle == null)
-                    return Content(HttpStatusCode.NotFound, ErrorMessages.NotFound("JobTitle by id", id));
+                var location = _locationService.GetById(id);
+                if (location == null)
+                    return Content(HttpStatusCode.NotFound, ErrorMessages.NotFound("Location by id", id));
 
-                return Ok(jobTitle);
+                return Ok(location);
             }
             catch (Exception ex)
             {
@@ -82,14 +80,14 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route(Resources.Constants.JobTitleApi.CreateJobTitle.Rout, Name = Resources.Constants.JobTitleApi.CreateJobTitle.RoutName)]
+        [Route(Resources.Constants.LocationApi.CreateLocation.Rout, Name = Resources.Constants.LocationApi.CreateLocation.RoutName)]
         public IHttpActionResult CreateAgency(string name)
         {
             try
             {
                 var agencyName = Util.Utilities.ReplaceDashesWithSpaces(name);
-                var jobTitle = _jobTitleService.CreateJobTitle(agencyName);
-                return Ok(jobTitle);
+                var location = _locationService.CreateLocation(agencyName);
+                return Ok(location);
             }
 
             catch (Exception ex)

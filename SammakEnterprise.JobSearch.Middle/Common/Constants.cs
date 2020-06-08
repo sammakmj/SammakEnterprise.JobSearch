@@ -2,6 +2,8 @@
 {
     internal static class Constants
     {
+        public static int HashSeed = 486187739;  // a large prime number
+
         #region SQL common defines
 
         /// <summary>

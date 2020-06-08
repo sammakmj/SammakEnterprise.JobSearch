@@ -61,6 +61,8 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
 
         public string Name { get; set; }
 
+        public List<ChildExpose> Approaches { get; set; }
+
         #endregion
     }
 
@@ -81,6 +83,22 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             CreateMap<Entity.Method, MethodExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Approaches, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if (src.Approaches != null)
+                    {
+                        dest.Approaches = new List<ChildExpose>();
+                        foreach (var entry in src.Approaches)
+                        {
+                            dest.Approaches.Add(new ChildExpose
+                            {
+                                Id = entry.ExternalId,
+                                Description = entry.ToString()
+                            });
+                        }
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<Entity.Method>, MethodExposeCollection>(MemberList.Destination)

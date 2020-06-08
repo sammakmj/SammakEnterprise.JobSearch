@@ -81,12 +81,11 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
 
         public override int GetHashCode()
         {
-            const int hashSeed = 486187739;  // a large prime number
             unchecked // Overflow is fine, just wrap
             {
-                int hash = hashSeed;
-                hash = hash * hashSeed + base.GetHashCode();
-                hash = hash * hashSeed + Name.GetHashCode();
+                int hash = Constants.HashSeed;
+                hash = hash * Constants.HashSeed + base.GetHashCode();
+                hash = hash * Constants.HashSeed + Name.GetHashCode();
                 return hash;
             }
         }
@@ -97,8 +96,7 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Entity
         /// <returns></returns>
         public override string ToString()
         {
-            var result = $"Job Title: {Name}";
-            return result;
+            return $"{Name}";
         }
 
         #endregion

@@ -74,6 +74,9 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         public string Name { get; set; }
         public string WebSite { get; internal set; }
 
+        public List<ChildExpose> Agents { get; set; }
+        public List<ChildExpose> Approaches { get; set; }
+
         #endregion
     }
 
@@ -95,6 +98,35 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.WebSite, opt => opt.MapFrom(src => src.WebSite))
+                .ForMember(dest => dest.Agents, opt => opt.Ignore())
+                .ForMember(dest => dest.Approaches, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if (src.Agents != null)
+                    {
+                        dest.Approaches = new List<ChildExpose>();
+                        dest.Agents = new List<ChildExpose>();
+                        foreach (var entry in src.Agents)
+                        {
+                            dest.Agents.Add(new ChildExpose
+                            {
+                                Id = entry.ExternalId,
+                                Description = entry.ToString()
+                            });
+                            if (entry.Approaches != null)
+                            {
+                                foreach (var approach in entry.Approaches)
+                                {
+                                    dest.Approaches.Add(new ChildExpose
+                                    {
+                                        Id = approach.ExternalId,
+                                        Description = approach.ToString()
+                                    });
+                                }
+                            }
+                        }
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<Agency>, AgencyExposeCollection>(MemberList.Destination)

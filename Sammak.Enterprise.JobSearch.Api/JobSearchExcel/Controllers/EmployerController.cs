@@ -13,22 +13,22 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
     /// 
     /// </summary>
     [RoutePrefix(Resources.Constants.AppInfo.RoutePrefix)]
-    public class JobTitleController : ControllerBase
+    public class EmployerController : ControllerBase
     {
         #region Properties
 
-        private readonly IJobTitleService _jobTitleService;
+        private readonly IEmployerService _employerService;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobTitleController"/> class.
+        /// Initializes a new instance of the <see cref="EmployerController"/> class.
         /// </summary>
-        public JobTitleController(IJobTitleService jobTitleService)
+        public EmployerController(IEmployerService employerService)
         {
-            _jobTitleService = jobTitleService;
+            _employerService = employerService;
         }
 
         #endregion
@@ -40,13 +40,13 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route(Resources.Constants.JobTitleApi.GetAll.Rout, Name = Resources.Constants.JobTitleApi.GetAll.RoutName)]
-        public IHttpActionResult GetAllJobTitles()
+        [Route(Resources.Constants.EmployerApi.GetAll.Rout, Name = Resources.Constants.EmployerApi.GetAll.RoutName)]
+        public IHttpActionResult GetAllEmployers()
         {
             try
             {
-                var jobTitles = _jobTitleService.GetAll();
-                return Ok(jobTitles);
+                var employers = _employerService.GetAll();
+                return Ok(employers);
             }
 
             catch (Exception ex)
@@ -60,16 +60,16 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route(Resources.Constants.JobTitleApi.GetJobTitle.Rout, Name = Resources.Constants.JobTitleApi.GetJobTitle.RoutName)]
-        public IHttpActionResult GetJobTitle(Guid id)
+        [Route(Resources.Constants.EmployerApi.GetEmployer.Rout, Name = Resources.Constants.EmployerApi.GetEmployer.RoutName)]
+        public IHttpActionResult GetEmployer(Guid id)
         {
             try
             {
-                var jobTitle = _jobTitleService.GetById(id);
-                if (jobTitle == null)
-                    return Content(HttpStatusCode.NotFound, ErrorMessages.NotFound("JobTitle by id", id));
+                var employer = _employerService.GetById(id);
+                if (employer == null)
+                    return Content(HttpStatusCode.NotFound, ErrorMessages.NotFound("Employer by id", id));
 
-                return Ok(jobTitle);
+                return Ok(employer);
             }
             catch (Exception ex)
             {
@@ -82,14 +82,14 @@ namespace SammakEnterprise.JobSearch.Api.JobSearchExcel.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route(Resources.Constants.JobTitleApi.CreateJobTitle.Rout, Name = Resources.Constants.JobTitleApi.CreateJobTitle.RoutName)]
+        [Route(Resources.Constants.EmployerApi.CreateEmployer.Rout, Name = Resources.Constants.EmployerApi.CreateEmployer.RoutName)]
         public IHttpActionResult CreateAgency(string name)
         {
             try
             {
                 var agencyName = Util.Utilities.ReplaceDashesWithSpaces(name);
-                var jobTitle = _jobTitleService.CreateJobTitle(agencyName);
-                return Ok(jobTitle);
+                var employer = _employerService.CreateEmployer(agencyName);
+                return Ok(employer);
             }
 
             catch (Exception ex)

@@ -74,6 +74,13 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
         #region Properties
 
         public DateTime InitialDate { get; set; }
+        public List<ChildExpose> Activities { get; set; }
+        public ChildExpose Agent { get; set; }
+        public ChildExpose Agency { get; set; }
+        public ChildExpose JobTitle { get; set; }
+        public ChildExpose Location { get; set; }
+        public ChildExpose Employer { get; set; }
+        public ChildExpose Method { get; set; }
 
         #endregion
     }
@@ -95,6 +102,76 @@ namespace SammakEnterprise.JobSearch.Middle.JobSearchExcel.Service
             CreateMap<Approach, ApproachExpose>(MemberList.Destination)
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId))
                 .ForMember(dest => dest.InitialDate, opt => opt.MapFrom(src => src.InitialDate))
+                .ForMember(dest => dest.Activities, opt => opt.Ignore())
+                .ForMember(dest => dest.Agent, opt => opt.Ignore())
+                .ForMember(dest => dest.Location, opt => opt.Ignore())
+                .ForMember(dest => dest.Employer, opt => opt.Ignore())
+                .ForMember(dest => dest.JobTitle, opt => opt.Ignore())
+                .ForMember(dest => dest.Method, opt => opt.Ignore())
+                .ForMember(dest => dest.Agency, opt => opt.Ignore())
+                .AfterMap((src, dest, context) =>
+                {
+                    if(src.Agent != null)
+                    {
+                        dest.Agent = new ChildExpose
+                        {
+                            Id = src.Agent.ExternalId,
+                            Description = src.Agent.ToString()
+                        };
+                        if (src.Agent.Agency != null)
+                        {
+                            dest.Agency = new ChildExpose
+                            {
+                                Id = src.Agent.Agency.ExternalId,
+                                Description = src.Agent.Agency.ToString()
+                            };
+                        }
+                    }
+                    if(src.Location != null)
+                    {
+                        dest.Location = new ChildExpose
+                        {
+                            Id = src.Location.ExternalId,
+                            Description = src.Location.ToString()
+                        };
+                    }
+                    if(src.JobTitle != null)
+                    {
+                        dest.JobTitle = new ChildExpose
+                        {
+                            Id = src.JobTitle.ExternalId,
+                            Description = src.JobTitle.ToString()
+                        };
+                    }
+                    if(src.Method != null)
+                    {
+                        dest.Method = new ChildExpose
+                        {
+                            Id = src.Method.ExternalId,
+                            Description = src.Method.ToString()
+                        };
+                    }
+                    if(src.Employer != null)
+                    {
+                        dest.Employer = new ChildExpose
+                        {
+                            Id = src.Employer.ExternalId,
+                            Description = src.Employer.ToString()
+                        };
+                    }
+                    if (src.Activities != null)
+                    {
+                        dest.Activities = new List<ChildExpose>();
+                        foreach (var entry in src.Activities)
+                        {
+                            dest.Activities.Add(new ChildExpose
+                            {
+                                Id = entry.ExternalId,
+                                Description = entry.ToString()
+                            });
+                        }
+                    }
+                })
                 ;
 
             CreateMap<IEnumerable<Approach>, ApproachExposeCollection>(MemberList.Destination)
